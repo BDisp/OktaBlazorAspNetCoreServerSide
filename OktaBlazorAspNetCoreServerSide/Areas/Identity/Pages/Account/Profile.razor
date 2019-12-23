@@ -1,0 +1,28 @@
+﻿@page "/Profile"
+@layout MainLayout
+
+@attribute [Authorize]
+
+<AuthorizeView>
+    <Authorized>
+        <h1>View claims</h1>
+
+        <dl class="dl-horizontal">
+            @foreach (var claim in context.User.Claims)
+            {
+                <dt title="@claim.Type">
+                    @claim.Type
+                    <button type="button"
+                            class="btn btn-link btn-sm"
+                            aria-label="Copy to clipboard"
+                            title="Click to copy to clipboard"
+                            data-clipboard-text="@claim.Value">
+                        <span class="oi oi oi-clipboard" aria-hidden="true"></span>
+                    </button>
+                </dt>
+
+                <dd id="claim-@String.Format("{0}", claim.Type)">@claim.Value</dd>
+            }
+        </dl>
+    </Authorized>
+</AuthorizeView>
